@@ -21,11 +21,15 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  console.log(req.body.email);
   const user = await User.findOne({
     email: req.body.email,
     password: req.body.password
   });
+
+  user.email = undefined;
+  user.password = undefined;
+  user.createdAt = undefined;
+  user.updatedAt = undefined;
 
   console.log(user);
 
