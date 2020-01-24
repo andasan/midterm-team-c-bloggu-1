@@ -51,13 +51,16 @@ exports.deletePost = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
+  console.log(req.body);
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    userId: "002",
-    featuredImage: req.body.image,
-    category: req.body.category
+    userId: req.body.userId
+    // featuredImage: req.body.image,
+    // category: req.body.category
   });
+
+  console.log(post);
   try {
     if (!post) {
       return res.send("fail to post");
@@ -65,29 +68,7 @@ exports.post = async (req, res) => {
     await post.save();
     return res.status(201).send({ post });
   } catch (e) {
-    return res.status(400).send(e);
-  }
-};
-
-exports.getHomePage = (req, res, next) => {
-  res.render("home");
-};
-
-exports.displayArticle = async (req, res) => {
-  const post = new Post({
-    title: "Test",
-    content: "test test test",
-    userId: "123",
-    featuredImage: "abc.img",
-    category: "technology"
-  });
-  try {
-    if (!post) {
-      return res.send("fail to post");
-    }
-    await post.save();
-    return res.status(201).send({ post });
-  } catch (e) {
+    console.log(e);
     return res.status(400).send(e);
   }
 };
