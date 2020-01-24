@@ -8,82 +8,136 @@
 /**************************************************/
 
 .article_main {
-    height: 100%;
-    max-height: 100%;
-    overflow-x: hidden;
-    perspective: 1px;
-    perspective-origin: center top;
-    transform-style: preserve-3d;
-  
-    .article_section {
-      min-height: 100vh;
-      background: white;
-      transform: translateZ(0);
-      width: 100%;
-      color: rgb(31, 31, 31);
-  
-      .article_main_wrapper {
-        display: flex;
-        justify-content: center;
+  height: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  perspective: 1px;
+  perspective-origin: center top;
+  transform-style: preserve-3d;
 
-        a:hover{
-            text-decoration: underline;
+  .article_section {
+    // min-height: 100vh;
+    background: white;
+    transform: translateZ(0);
+    width: 100%;
+    color: rgb(31, 31, 31);
+
+    .article_main_wrapper {
+      display: flex;
+      justify-content: center;
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .article_wrapper {
+        margin-top: 30px;
+        align-items: center;
+        width: 994px;
+
+        .article_title {
+          margin-top: 50px;
         }
 
-        .article_wrapper{
-            margin-top: 30px;
-            align-items: center;
-            width: 994px;
+        .article_content {
+          margin-top: 50px;
 
-            .article_title{
-                margin-top: 50px;
-            }
-
-            .article_content{
-                margin-top: 50px;
-
-                p{
-                    font-size: 1.5rem;
-                    font-weight: 100;
-                    margin: 10px 0;
-                }
-            }
-
-            .author{
-                display: flex;
-                align-items: center;
-                width: 100%;
-                position: relative;
-
-                .author_name > a {
-                    color: blue;
-                }
-
-                .author_picture{
-                    width: 40px;
-                    height: 40px;
-                    background-color: #97C3C9;
-                    border-radius: 50%;
-                    margin-right: 10px;
-    
-                    img{
-                        width: 40px;
-                    }
-                }
-
-                
-            } 
-            .article_cat{
-                position: absolute;
-                right: 0;
-                background-color: black;
-                padding: 5px 15px;
-                border-radius: 10px;
-                color: white;
-                font-size: .8rem;
-                text-align: center;
-            }           
+          p {
+            font-size: 1.5rem;
+            font-weight: 100;
+            margin: 10px 0;
+          }
         }
+
+        .author {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          position: relative;
+
+          .author_name > a {
+            color: blue;
+          }
+
+          .author_picture {
+            width: 40px;
+            height: 40px;
+            background-color: #97c3c9;
+            border-radius: 50%;
+            margin-right: 10px;
+
+            img {
+              width: 40px;
+            }
+          }
+        }
+        .article_cat {
+          position: absolute;
+          right: 0;
+          background-color: black;
+          padding: 5px 15px;
+          border-radius: 10px;
+          color: white;
+          font-size: 0.8rem;
+          text-align: center;
+        }
+
+        .article_likes{
+            margin: 50px 0 20px 0;
+        }
+
       }
     }
   }
+}
+
+.article_response {
+  height: 100%;
+  max-height: 100%;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+
+  .wrapper {
+    margin-top: 30px;
+    align-items: center;
+    width: 500px;
+  }
+
+  /*************************************/
+
+  .btn{
+    color: #3f51b5;
+    border: 1px solid rgba(63, 81, 181, 0.5);
+    cursor: pointer;
+  }
+
+  form {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 2em 0;
+  }
+
+  .group {
+    position: relative;
+    margin-bottom: 15px;
+  }
+
+  input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    -webkit-appearance: none;
+    display: block;
+    background: none;
+    color: #3d3d3d;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #757575;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+}

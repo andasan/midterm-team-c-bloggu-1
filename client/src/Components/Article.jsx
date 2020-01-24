@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Article.scss";
+import { api } from "../api";
 
 import Header from "./Header";
 import Navigation from "./Navigation";
@@ -43,33 +44,81 @@ const articleHeaderStyle = {
 }
 
 
-const Article = () => {
+const Article = (userID) => {
+    const [response, setResponse] = useState();
+
+  const responseForm = async event => {
+      console.log("clicked");
+    event.preventDefault();
+    if (response !== undefined && response !== "") {
+      const user = await api.post("/comment", {
+        comment: response
+      });
+      localStorage.setItem("user", user.data.user._id);
+
+      setResponse("");
+    }
+  };
+
+  const handleResponseChange = value => {
+    setResponse(value);
+  };
+
     return (
-        <div className="article_main">
-            <header style={articleHeaderStyle}>
-            </header>
-            <div className="article_section">
-                <Header />
-                <div className="article_main_wrapper">
+        <>
+            <div className="article_main">
+                <header style={articleHeaderStyle}>
+                </header>
+                <div className="article_section">
+                    <Header />
+                    <div className="article_main_wrapper">
 
-                    <div className="article_wrapper">
-                        <Navigation />
-                        <h1 className="article_title">{articleData.title}</h1>
-                        <div className="author">
-                            <div className="author_picture"><img src="" /></div>
-                            <div className="author_name"><a href={`/u/${articleData.author}`}>{articleData.author}</a> - {articleData.published_date}</div>
+                        <div className="article_wrapper">
+                            <Navigation />
+                            <h1 className="article_title">{articleData.title}</h1>
+                            <div className="author">
+                                <div className="author_picture"><img src="" /></div>
+                                <div className="author_name"><a href={`/u/${articleData.author}`}>{articleData.author}</a> - {articleData.published_date}</div>
 
-                            <div className="article_cat">{articleData.category}</div>
+                                <div className="article_cat">{articleData.category}</div>
+                            </div>
+
+                            <div className="article_content">
+                                <p>{articleData.content}</p>
+                            </div>
+
+                            <div className="article_likes">
+                            <h3><i className="far fa-heart"></i> -Like goes here-</h3>
+                            </div>
                         </div>
-
-                        <div className="article_content">
-                            <p>{articleData.content}</p>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
+            <div className="article_response">
+                <div className="wrapper">
+                    Write a comment<br />
+                    <form onSubmit={responseForm}>
+                        <div className="group">
+                            <input
+                                type="hidden"
+                            />
+                            <br />
+                            <input
+                                type="text"
+                                placeholder="Enter your Response"
+                                onChange={e => handleResponseChange(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <input type="submit" className="btn" value="Submit" />
+                    </form>
+
+                    Comments<br />
+                    <hr/>
+                </div>
+
+            </div>
+        </>
     );
 };
 

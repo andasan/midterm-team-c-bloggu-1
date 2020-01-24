@@ -46,7 +46,11 @@ const articles = [{
     featuredImage: "https://images.unsplash.com/photo-1520312501384-dbdb83a1cb11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2400&q=80"
   }];
 
-const user_articles = articles.map(entry => (
+let authorName;
+const user_articles = articles.map(entry => {
+    authorName = entry.author;
+    return(
+    
     <div className="user_article" key={entry.title}>
         <div className="child"><a href={`/article/${entry._id}`}><div className="user_article_image" style={{ backgroundImage: `url("${entry.featuredImage}")`, height: '280px' }}></div></a></div>
         <div className="user_article_content">
@@ -57,7 +61,7 @@ const user_articles = articles.map(entry => (
             <p>{entry.content}</p>
         </div>
     </div>
-));
+)});
 
 const Profile = () => {
     return (
@@ -71,9 +75,12 @@ const Profile = () => {
                     <div className="profile_article_wrapper">
                         <Navigation />
 
-                        <div className="create_article_section"> 
-                            <i className="fa fa-plus-circle"></i>
-                            <a href="/post">Create New Post</a>
+                        <div className="create_article_section">
+                            <div><h3>{authorName}'s Posts</h3></div>
+                            <div>
+                                <i className="fa fa-plus-circle"></i>
+                                <a href="/post">Create New Post</a>
+                            </div>
                         </div>
 
                         <div className="profile_articles">
