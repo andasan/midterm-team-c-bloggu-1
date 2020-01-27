@@ -6,16 +6,17 @@ import { Link, withRouter } from "react-router-dom";
 
 import Header from "./Header";
 import Navigation from "./Navigation";
+import Comments from "./Comments";
 
 const Article = ({ match, history }) => {
   const [response, setResponse] = useState();
   const [articleData, setArticleData] = useState([]);
   const [usersData, setUsersData] = useState([]);
+  const [commentsData, setCommentsData] = useState([]);
 
   let user;
   if (localStorage.getItem("user")) {
     user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
   }
 
   useEffect(() => {
@@ -30,6 +31,12 @@ const Article = ({ match, history }) => {
       setUsersData(users.data.users);
     }
     fetchUsers();
+
+    async function fetchComments() {
+      const comments = await api.get("/comments");
+      setCommentsData(comments.data.comments);
+    }
+    fetchComments();
   }, []);
 
   const findUserName = id => {
@@ -116,7 +123,7 @@ const Article = ({ match, history }) => {
                     {findUserName(articleData.userId)}
                   </a>{" "}
                   - <Moment date={articleData.createdAt} format="YYYY/MM/DD" />
-                  {user._id !== articleData.userId ? (
+                  {user === undefined || user._id !== articleData.userId ? (
                     <div></div>
                   ) : (
                     <div>
@@ -138,40 +145,49 @@ const Article = ({ match, history }) => {
                 <p>{articleData.content}</p>
               </div>
 
-              <div className="article_likes">
-                <h3>
-                  <i className="far fa-heart"></i> 0
-                </h3>
-              </div>
+              {user === undefined ? (
+                <div></div>
+              ) : (
+                <div className="article_likes">
+                  <h3>
+                    <i className="far fa-heart"></i> 0
+                  </h3>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
       <div className="article_response">
-        <div className="wrapper">
-          Write a comment
-          <br />
-          <form onSubmit={responseForm}>
-            <div className="group">
-              <input type="hidden" />
-              <br />
-              <input
-                type="text"
-                placeholder="Enter your Response"
-                onChange={e => handleResponseChange(e.target.value)}
-                required
-              />
-            </div>
-            <input type="submit" className="btn" value="Submit" />
-          </form>
-          Comments
-          <br />
-          <hr />
-        </div>
+        {user === undefined ? (
+          <div></div>
+        ) : (
+          <div className="wrapper">
+            Write a comment
+            <br />
+            <form onSubmit={responseForm}>
+              <div className="group">
+                <input type="hidden" />
+                <br />
+                <input
+                  type="text"
+                  placeholder="Enter your Response"
+                  onChange={e => handleResponseChange(e.target.value)}
+                  required
+                />
+              </div>
+              <input type="submit" className="btn" value="Submit" />
+            </form>
+            Comments
+            <br />
+            <hr />
+            <Comments users={usersData} comments={commentsData} />
+          </div>
+        )}
+
         <footer>&copy; Copyright 2020. Team C</footer>
       </div>
     </>
   );
 };
-
 export default withRouter(Article);

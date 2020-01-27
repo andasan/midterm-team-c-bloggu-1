@@ -22,9 +22,12 @@ exports.getUser = async (req, res) => {
 exports.signup = async (req, res) => {
   console.log(req.body);
   const user = new User({
-    userName: req.body.userName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    userName: req.body.firstName,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    displayPicture: displayPicture
   });
   console.log(user);
   try {

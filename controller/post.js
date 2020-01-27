@@ -21,7 +21,7 @@ exports.getPost = async (req, res) => {
 
 exports.getPostsByUser = async (req, res) => {
   try {
-    const articles = await Post.find( { userId: req.params.userId } );
+    const articles = await Post.find({ userId: req.params.userId });
     return res.status(201).send({ articles });
   } catch (e) {
     return res.status(400).send(e);
@@ -31,7 +31,7 @@ exports.getPostsByUser = async (req, res) => {
 exports.getPostsByCategory = async (req, res) => {
   console.log("params = ", req.params.category);
   try {
-    const articles = await Post.find( { category: req.params.category } );
+    const articles = await Post.find({ category: req.params.category });
     return res.status(201).send({ articles });
   } catch (e) {
     return res.status(400).send(e);
@@ -54,7 +54,7 @@ exports.editPost = async (req, res) => {
     );
     return res.status(201).send({ article });
   } catch (e) {
-    console.log("ERROR = ",e);
+    console.log("ERROR = ", e);
     return res.status(400).send(e);
   }
 };
@@ -85,8 +85,9 @@ exports.post = async (req, res) => {
     userId: req.body.userId,
     title: req.body.title,
     content: req.body.content,
-    category: req.body.category,
-    featuredImage: req.body.featuredImage
+    userId: req.body.userId,
+    featuredImage: req.body.featuredImage,
+    category: req.body.category
   });
 
   console.log(post);
