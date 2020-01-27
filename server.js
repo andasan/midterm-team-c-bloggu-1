@@ -4,12 +4,14 @@ const cors = require("cors");
 require("./db/db");
 const userRouter = require("./router/user");
 const postRouter = require("./router/post");
+const categoryRouter = require("./router/category");
 
 app.use(express.json());
 app.use(cors());
 
 app.use(userRouter);
 app.use(postRouter);
+app.use(categoryRouter);
 
 const port = process.env.PORT || 8000;
 

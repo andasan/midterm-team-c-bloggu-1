@@ -33,6 +33,7 @@ $image_home: "https://images.unsplash.com/photo-1517918887569-428b360e7607?ixlib
     transform: translateZ(0);
     width: 100%;
     color: rgb(31, 31, 31);
+    position: relative;
     
     .home_main_wrapper {
         display: flex;
@@ -96,13 +97,10 @@ $image_home: "https://images.unsplash.com/photo-1517918887569-428b360e7607?ixlib
                             .author_picture{
                                 width: 40px;
                                 height: 40px;
-                                background-color: #97C3C9;
-                                border-radius: 50%;
                                 margin-right: 10px;
-
-                                img{
-                                    width: 40px;
-                                }
+                                border-radius: 50%;
+                                background-size: cover;
+                                background-position: center center;
                             }
                         }
                     }
@@ -156,19 +154,24 @@ $image_home: "https://images.unsplash.com/photo-1517918887569-428b360e7607?ixlib
                             .author_picture{
                                 width: 40px;
                                 height: 40px;
-                                background-color: #97C3C9;
-                                border-radius: 50%;
                                 margin-right: 10px;
-
-                                img{
-                                    width: 40px;
-                                }
+                                border-radius: 50%;
+                                background-size: cover;
+                                background-position: center center;
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    footer{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 50px;
+        text-align: center;
     }
   }
 }

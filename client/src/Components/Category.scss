@@ -1,0 +1,41 @@
+.category_main {
+  height: 150vh;
+  max-height: 100%;
+  overflow-x: hidden;
+  perspective: 1px;
+  perspective-origin: center top;
+  transform-style: preserve-3d;
+
+  .category_section {
+    // min-height: 200vh;
+    min-height: 100%;
+    background: white;
+    transform: translateZ(0);
+    width: 100%;
+    color: rgb(31, 31, 31);
+    position: relative;
+    
+    .category_main_wrapper {
+        display: flex;
+        justify-content: center;
+
+        a:hover{
+            text-decoration: underline;
+        }
+
+        .category_article_wrapper{
+            margin-top: 30px;
+            align-items: center;
+            width: 994px;
+        }
+    }
+
+    footer{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 50px;
+        text-align: center;
+    }
+  }
+}

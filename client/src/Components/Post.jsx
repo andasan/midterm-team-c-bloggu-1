@@ -19,7 +19,7 @@ import Header from "./Header";
 
 const postHeaderStyle = {
   height: "50vh",
-  background: `url("https://images.unsplash.com/photo-1573718893672-86144926f4fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80")`,
+  backgroundImage: `url("https://images.unsplash.com/photo-1573718893672-86144926f4fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80")`,
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
   position: "relative",
@@ -79,11 +79,8 @@ const Post = () => {
   const postForm = async event => {
     event.preventDefault();
     if (postTitle !== undefined && postTitle !== "") {
-      const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user._id);
-
       const post = await api.post("/post", {
-        userId: user._id,
+        // userId: localStorage.getItem("user", user.data.user),
         title: postTitle,
         content: postContent,
         category: category,
@@ -191,6 +188,7 @@ const Post = () => {
             </Container>
           </div>
         </div>
+        <footer>&copy; Copyright 2020. Team C</footer>
       </div>
     </div>
   );

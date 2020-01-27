@@ -1,125 +1,177 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./Article.scss";
 import { api } from "../api";
+import Moment from "react-moment";
+import { Link, withRouter } from "react-router-dom";
 
 import Header from "./Header";
 import Navigation from "./Navigation";
 
-const articleData = {
-    featuredImage: "https://images.unsplash.com/photo-1509680859026-7d8cfc6894f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80",
-    title: "秋山成勲が6000円ラーメンに仰天し1500円のラーメン注文",
-    content: `格闘家・秋山成勲（40）が、「高過ぎるラーメン」をブログで紹介した。その価格、6000円。秋山はさすがにそのラーメンは食べず、もう少しランクの低い1500円のものを食べたのだという。店は大阪の「神戸牛拉麺915」。神戸牛を扱う店である。
+const Article = ({ match, history }) => {
+  const [response, setResponse] = useState();
+  const [articleData, setArticleData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
 
-    「最高級のしゃぶしゃぶ肉使用。極上の一杯。贅の極み拉麺」と題されており、「神戸牛サーロイン拉麺」は4000円で、「神戸牛ヘレ拉麺」は6000円。
-    
-    秋山は、「さすがに高いから」と1500円の「神戸牛拉麺（中）」を頼んだ。
-    
-    「上から牛のスープを、かけしゃぶしゃぶしながら麺を食べる!?
-    
-    美味い!!　さすが神戸牛やね!?
-    
-    今度は6000円イッタろかなー!?」
-    
-    と次は最上級の6000円ラーメンへの挑戦を示唆した。
-    
-    ラーメン好き集まれ～」
-    
-    こう呼びかけた。このラーメンに対してはすでにネットにはレビューがあり、食べログで「とよつね」氏は「熱々スープで半レア状態になったA5ランクの神戸牛がたっぷりとのってあり、とろける柔らかさでとても美味しく頂けます」と評している。
-    `,
-    category: "Food",
-    published_date: "Jan 23 2020",
-    author: "Marie"
-};
+  let user;
+  if (localStorage.getItem("user")) {
+    user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+  }
 
-const articleHeaderStyle = {
-    height: '50vh',
-    background: `url("${articleData.featuredImage}")`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    position: 'relative',
-    verticalAlign: 'top',
-    backgroundPosition: 'center center',
-    transformOrigin: 'center top',
-    transform: 'translateZ(-#{0.5 * 2}px) scale(1 + 0.5 * 2)'
-}
+  useEffect(() => {
+    async function fetchArticle() {
+      const article = await api.get("/" + match.params.id);
+      setArticleData(article.data.article);
+    }
+    fetchArticle();
 
+    async function fetchUsers() {
+      const users = await api.get("/users");
+      setUsersData(users.data.users);
+    }
+    fetchUsers();
+  }, []);
 
-const Article = (userID) => {
-    const [response, setResponse] = useState();
+  const findUserName = id => {
+    let userName;
+    usersData.map(entry => {
+      if (entry._id === id) userName = entry.firstName + " " + entry.lastName;
+    });
+    return userName;
+  };
+
+  const findUserPic = id => {
+    let displayPic;
+    usersData.map(entry => {
+      if (entry._id === id) {
+        displayPic = entry.displayPicture;
+      }
+    });
+    return displayPic;
+  };
 
   const responseForm = async event => {
-      console.log("clicked");
     event.preventDefault();
     if (response !== undefined && response !== "") {
       const user = await api.post("/comment", {
         comment: response
       });
-      localStorage.setItem("user", user.data.user._id);
 
       setResponse("");
     }
+  };
+
+  const deleteArticle = async event => {
+    event.preventDefault();
+    const deleteArticle = await api
+      .delete("/delete/" + match.params.id)
+      .then(function(response) {
+        history.push("/u/" + user._id);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
+  const articleHeaderStyle = {
+    height: "50vh",
+    backgroundImage: `url("${articleData.featuredImage}")`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    position: "relative",
+    verticalAlign: "top",
+    backgroundPosition: "center center",
+    transformOrigin: "center top",
+    transform: "translateZ(-#{0.5 * 2}px) scale(1 + 0.5 * 2)"
   };
 
   const handleResponseChange = value => {
     setResponse(value);
   };
 
-    return (
-        <>
-            <div className="article_main">
-                <header style={articleHeaderStyle}>
-                </header>
-                <div className="article_section">
-                    <Header />
-                    <div className="article_main_wrapper">
-
-                        <div className="article_wrapper">
-                            <Navigation />
-                            <h1 className="article_title">{articleData.title}</h1>
-                            <div className="author">
-                                <div className="author_picture"><img src="" /></div>
-                                <div className="author_name"><a href={`/u/${articleData.author}`}>{articleData.author}</a> - {articleData.published_date}</div>
-
-                                <div className="article_cat">{articleData.category}</div>
-                            </div>
-
-                            <div className="article_content">
-                                <p>{articleData.content}</p>
-                            </div>
-
-                            <div className="article_likes">
-                            <h3><i className="far fa-heart"></i> -Like goes here-</h3>
-                            </div>
-                        </div>
+  return (
+    <>
+      <div className="article_main">
+        <div className="article_header" style={articleHeaderStyle}></div>
+        <div className="article_section">
+          <Header />
+          <div className="article_main_wrapper">
+            <div className="article_wrapper">
+              <Navigation />
+              <h1 className="article_title">{articleData.title}</h1>
+              <div className="author">
+                <a href={`/u/${articleData.userId}`}>
+                  <div
+                    className="author_picture"
+                    style={{
+                      backgroundImage: `url("${findUserPic(
+                        articleData.userId
+                      )}")`,
+                      height: "40px"
+                    }}
+                  ></div>
+                </a>
+                <div className="author_name">
+                  <a href={`/u/${articleData.userId}`}>
+                    {findUserName(articleData.userId)}
+                  </a>{" "}
+                  - <Moment date={articleData.createdAt} format="YYYY/MM/DD" />
+                  {user._id !== articleData.userId ? (
+                    <div></div>
+                  ) : (
+                    <div>
+                      <i className="fa fa-edit"></i>
+                      <a href={`/edit/${articleData._id}`}> Edit Post</a>
+                      &nbsp;&nbsp;/&nbsp;&nbsp;
+                      <i className="fa fa-trash-alt"></i>
+                      <a onClick={deleteArticle}>Delete Post</a>
                     </div>
-                </div>
-            </div>
-            <div className="article_response">
-                <div className="wrapper">
-                    Write a comment<br />
-                    <form onSubmit={responseForm}>
-                        <div className="group">
-                            <input
-                                type="hidden"
-                            />
-                            <br />
-                            <input
-                                type="text"
-                                placeholder="Enter your Response"
-                                onChange={e => handleResponseChange(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <input type="submit" className="btn" value="Submit" />
-                    </form>
-
-                    Comments<br />
-                    <hr/>
+                  )}
                 </div>
 
+                <a href={`/category/${articleData.category}`}>
+                  <div className="article_cat">{articleData.category}</div>
+                </a>
+              </div>
+
+              <div className="article_content">
+                <p>{articleData.content}</p>
+              </div>
+
+              <div className="article_likes">
+                <h3>
+                  <i className="far fa-heart"></i> 0
+                </h3>
+              </div>
             </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+      <div className="article_response">
+        <div className="wrapper">
+          Write a comment
+          <br />
+          <form onSubmit={responseForm}>
+            <div className="group">
+              <input type="hidden" />
+              <br />
+              <input
+                type="text"
+                placeholder="Enter your Response"
+                onChange={e => handleResponseChange(e.target.value)}
+                required
+              />
+            </div>
+            <input type="submit" className="btn" value="Submit" />
+          </form>
+          Comments
+          <br />
+          <hr />
+        </div>
+        <footer>&copy; Copyright 2020. Team C</footer>
+      </div>
+    </>
+  );
 };
 
-export default Article;
+export default withRouter(Article);

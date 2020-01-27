@@ -28,6 +28,7 @@
 
       a:hover {
         text-decoration: underline;
+        cursor: pointer;
       }
 
       .article_wrapper {
@@ -62,13 +63,10 @@
           .author_picture {
             width: 40px;
             height: 40px;
-            background-color: #97c3c9;
-            border-radius: 50%;
             margin-right: 10px;
-
-            img {
-              width: 40px;
-            }
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center center;
           }
         }
         .article_cat {
@@ -82,10 +80,9 @@
           text-align: center;
         }
 
-        .article_likes{
-            margin: 50px 0 20px 0;
+        .article_likes {
+          margin: 50px 0 20px 0;
         }
-
       }
     }
   }
@@ -97,6 +94,8 @@
   background-color: #fafafa;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   .wrapper {
     margin-top: 30px;
@@ -104,9 +103,15 @@
     width: 500px;
   }
 
+  footer {
+    width: 100%;
+    padding: 50px;
+    text-align: center;
+  }
+
   /*************************************/
 
-  .btn{
+  .btn {
     color: #3f51b5;
     border: 1px solid rgba(63, 81, 181, 0.5);
     cursor: pointer;
@@ -139,5 +144,4 @@
   input:focus {
     outline: none;
   }
-
 }

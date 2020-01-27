@@ -3,40 +3,42 @@ import Header from "./Header";
 import "./Signup.scss";
 import { api } from "../api";
 
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+    margin: theme.spacing(3, 0, 2)
+  }
 }));
 
-const Signup = () => {
+const Signup = props => {
   const [userFirstName, setFirstName] = useState();
   const [userLastName, setLastName] = useState();
   const [userEmail, setUserEmail] = useState();
   const [userPass, setUserPass] = useState();
+  const [userPic, setUserPic] = useState();
 
   const classes = useStyles();
 
@@ -47,9 +49,11 @@ const Signup = () => {
         firstName: userFirstName,
         lastName: userLastName,
         email: userEmail,
-        password: userPass
+        password: userPass,
+        displayPicture: userPic
       });
-      localStorage.setItem("user", user.data.user._id);
+      localStorage.setItem("user", JSON.stringify(user.data.user));
+      props.history.push("/");
     }
   };
 
@@ -68,6 +72,9 @@ const Signup = () => {
   const handlePasswordChange = value => {
     setUserPass(value);
   };
+  const handlePictureChange = value => {
+    setUserPic(value);
+  };
 
   return (
     <div className="signup_main">
@@ -78,7 +85,6 @@ const Signup = () => {
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-
               <Typography component="h1" variant="h5">
                 Sign up
               </Typography>
@@ -130,6 +136,16 @@ const Signup = () => {
                       onChange={e => handlePasswordChange(e.target.value)}
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      name="displayPicture"
+                      label="Display Picture URL"
+                      type="text"
+                      id="displayPicture"
+                      onChange={e => handlePictureChange(e.target.value)}
+                    />
+                  </Grid>
                 </Grid>
                 <Button
                   type="submit"
@@ -140,17 +156,14 @@ const Signup = () => {
                 >
                   Sign Up
                 </Button>
-                
               </form>
             </div>
-            <Box mt={5}>
-            </Box>
+            <Box mt={5}></Box>
           </Container>
-          
         </div>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default withRouter(Signup);

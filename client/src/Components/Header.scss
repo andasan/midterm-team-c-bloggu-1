@@ -19,6 +19,11 @@ nav {
     align-items: center;
     width: 994px;
 
+    a:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
     .logo{
         height: 40px;
     }
@@ -28,6 +33,10 @@ nav {
 a{
   text-decoration: none;
   color: rgb(31, 31, 31);
+}
+
+.header_link {
+  text-transform: capitalize;
 }
 
 

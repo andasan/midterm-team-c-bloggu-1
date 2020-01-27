@@ -3,7 +3,7 @@ import "./Navigation.scss";
 
 const categoriesArr = ["Lifestyle","Food","Travel","Movie","Photography","Social Media","Pets","Technology","Fashion","Beauty"];
 const categories = categoriesArr.map(cat => (
-    <div className="category"><a href={`/${cat}`}>{cat}</a></div>
+    <div className="category" key={cat}><a href={`/category/${cat}`}>{cat}</a></div>
 ));
 
 const Navigation =() =>{
