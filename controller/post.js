@@ -53,11 +53,11 @@ exports.deletePost = async (req, res) => {
 exports.post = async (req, res) => {
   console.log(req.body);
   const post = new Post({
+    userId: req.body.userId,
     title: req.body.title,
     content: req.body.content,
-    userId: req.body.userId
-    // featuredImage: req.body.image,
-    // category: req.body.category
+    category: req.body.category,
+    featuredImage: req.body.featuredImage
   });
 
   console.log(post);

@@ -79,8 +79,11 @@ const Post = () => {
   const postForm = async event => {
     event.preventDefault();
     if (postTitle !== undefined && postTitle !== "") {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log(user._id);
+
       const post = await api.post("/post", {
-        // userId: localStorage.getItem("user", user.data.user),
+        userId: user._id,
         title: postTitle,
         content: postContent,
         category: category,
