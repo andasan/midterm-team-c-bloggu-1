@@ -24,6 +24,7 @@ const Profile = ({ match, history }) => {
 
         async function fetchUser() {
             const user = await api.get("/user/" + match.params.userid);
+            console.log("returned user data = ", user);
             setUserData(user.data.user);
         }
         fetchUser();

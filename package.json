@@ -19,6 +19,7 @@
     "env-cmd": "^10.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.8.9",
+    "mysql": "^2.18.1",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
