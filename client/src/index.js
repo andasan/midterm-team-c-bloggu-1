@@ -23,7 +23,7 @@ const Base = () => {
       <Route path="/article/:id" exact component={Article} />
       <Route path="/cat/:category" exact component={Category} />
       <Route path="/u/:userid" exact component={Profile} />
-      <Route path="/home" exact component={HomePage} />
+      <Route path="/" exact component={HomePage} />
     </Router>
   );
 };

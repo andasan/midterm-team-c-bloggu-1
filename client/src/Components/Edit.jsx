@@ -59,7 +59,7 @@ const Edit = ({ match, history }) => {
     useEffect(() => {
         async function fetchArticle() {
             console.log("used effect!");
-            const article = await api.get("/" + match.params.id);
+            const article = await api.get("/articles" + match.params.id);
             setArticleData(article.data.article);
             setTitle(article.data.article.title);
             setContent(article.data.article.content);

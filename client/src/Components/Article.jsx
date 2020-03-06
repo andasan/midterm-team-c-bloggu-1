@@ -22,7 +22,7 @@ const Article = ({ match, history }) => {
 
     useEffect(() => {
         async function fetchArticle() {
-            const article = await api.get("/" + match.params.id);
+            const article = await api.get("/articles" + match.params.id);
             setArticleData(article.data.article);
             setLikeCounter(article.data.article.likes);
             setCommentsData(article.data.article.comments);
