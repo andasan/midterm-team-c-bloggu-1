@@ -13,7 +13,7 @@ const HomePage = () => {
 
   useEffect(() => {
     async function fetchArticles() {
-      const articles = await api.get("/");
+      const articles = await api.get("/articles");
       setArticleData(articles.data.articles);
     }
     fetchArticles();

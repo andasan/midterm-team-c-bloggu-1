@@ -14,7 +14,7 @@ const {
 } = require("../controller/post");
 
 
-router.get("/", getAllPosts);
+router.get("/articles", getAllPosts);
 
 router.get("/:articleId", getPost);
 
