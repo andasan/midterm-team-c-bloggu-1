@@ -28,7 +28,6 @@ router.delete("/delete/:id", deletePost);
 router.delete("/deleteAll/:id", deleteAllPosts);
 
 router.post("/post", post);
-
 router.post("/like", postLike);
 
 module.exports = router;
