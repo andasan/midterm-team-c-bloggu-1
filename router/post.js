@@ -16,7 +16,7 @@ const {
 
 router.get("/", getAllPosts);
 
-router.get("/:articleId", getPost);
+router.get("/article/:articleId", getPost);
 
 router.get("/postByUser/:userId", getPostsByUser);
 
@@ -28,7 +28,6 @@ router.delete("/delete/:id", deletePost);
 router.delete("/deleteAll/:id", deleteAllPosts);
 
 router.post("/post", post);
-
 router.post("/like", postLike);
 
 module.exports = router;

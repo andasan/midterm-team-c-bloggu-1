@@ -13,7 +13,6 @@ exports.getAllPosts = async (req, res) => {
 exports.getPost = async (req, res) => {
   try {
     const article = await Post.findOne({ _id: req.params.articleId })
-      // .populate({ path: 'articleId', model:'Comment'})
       .populate('articleId')
     return res.status(201).send({ article });
     
