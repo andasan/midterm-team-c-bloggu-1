@@ -16,7 +16,7 @@ const {
 
 router.get("/", getAllPosts);
 
-router.get("/article/:articleId", getPost);
+router.get("/:articleId", getPost);
 
 router.get("/postByUser/:userId", getPostsByUser);
 

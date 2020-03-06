@@ -18,12 +18,12 @@ const Base = () => {
     <Router>
       <Route path="/post" exact component={Post} />
       <Route path="/edit/:id" exact component={Edit} />
-      <Route path="/signin" exact component={Signin} />
-      <Route path="/signup" exact component={Signup} />
+      <Route path="/login" exact component={Signin} />
+      <Route path="/register" exact component={Signup} />
       <Route path="/article/:id" exact component={Article} />
-      <Route path="/category/:category" exact component={Category} />
+      <Route path="/cat/:category" exact component={Category} />
       <Route path="/u/:userid" exact component={Profile} />
-      <Route path="/" exact component={HomePage} />
+      <Route path="/home" exact component={HomePage} />
     </Router>
   );
 };
